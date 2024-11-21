@@ -1,6 +1,10 @@
 # Our files
-blender-4.3.0-linux-x64
+blender-4.3.0-linux-x64/
 blender-4.3.0-linux-x64.tar.xz
+get-pip.py
+get-pip.py.1
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
