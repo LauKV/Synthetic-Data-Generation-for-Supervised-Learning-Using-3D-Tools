@@ -16,6 +16,7 @@ from lighting import config_world, create_light
 from utils import BlenderRemover, ArgumentParserForBlender
 from object import load_obj, create_plane, enable_shaow_catcher
 from transform import look_at, normalize_obj, againts_wall, random_loc
+from background import set_hdri_background
 
 
 def render_teaser(args):
@@ -33,7 +34,7 @@ def render_teaser(args):
     else:
         mat = None
     """
-
+    print("Script is running...3")
     # ======== Set up scene ========
     plane = create_plane((0, 0, -1), (0, 0, 0), (20, 20, 20), name="plane")
     enable_shaow_catcher(plane)
@@ -43,6 +44,8 @@ def render_teaser(args):
     spot_light = create_light("SPOT", (3, 3, 10), (np.pi / 2, 0, 0), 400, (1, 1, 1), 5, name="light")
     look_at(spot_light, obj.location)
     camera = bpy.data.objects["Camera"]
+    set_hdri_background(hdri_path="/home/opdal/Bureau/5GMM/small_cathedral_02_4k.exr")    ###### HDRI Background pathset_hdri_background()
+
     
     
     # ======== Render ========
@@ -58,11 +61,13 @@ def render_teaser(args):
 
 if __name__ == "__main__":
     parser = ArgumentParserForBlender()
-    parser.add_argument("-i", "--input", type=str, default="docs/bunny.obj")
+    parser.add_argument("-i", "--input", type=str, default="bunny.obj")
     parser.add_argument("-n", "--num", type=int, default=12)
     parser.add_argument("-c", "--color", type=str, default=None)
     parser.add_argument("--name", type=str, default="out")
+    parser.add_argument("-b", "--background", type=str, default="small_cathedral_02_4k.exr")
     args = parser.parse_args()
+    render_teaser(args)
 
 
 
