@@ -44,7 +44,7 @@ def render_teaser(args):
     spot_light = create_light("SPOT", (3, 3, 10), (np.pi / 2, 0, 0), 400, (1, 1, 1), 5, name="light")
     look_at(spot_light, obj.location)
     camera = bpy.data.objects["Camera"]
-    set_hdri_background(hdri_path="/home/opdal/Bureau/5GMM/small_cathedral_02_4k.exr")    ###### HDRI Background pathset_hdri_background()
+    set_hdri_background(args.background)    ###### HDRI Background pathset_hdri_background()
 
     
     
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--num", type=int, default=12)
     parser.add_argument("-c", "--color", type=str, default=None)
     parser.add_argument("--name", type=str, default="out")
-    parser.add_argument("-b", "--background", type=str, default="small_cathedral_02_4k.exr")
+    parser.add_argument("-b", "--background", type=str, default="rogland_moonlit_night_4k.exr")
     args = parser.parse_args()
     render_teaser(args)
 
