@@ -48,6 +48,14 @@ def join_objects(objs):
     obj = bpy.context.object
     return obj
 
+import bpy
+from bpy.app.handlers import persistent
+
+@persistent
+def load_handler(dummy):
+    print("Load Handler:", bpy.data.filepath)
+
+
 
 def load_obj(obj_root, obj_name, center=True, join=False, smart_uv=False):
     """
@@ -58,14 +66,21 @@ def load_obj(obj_root, obj_name, center=True, join=False, smart_uv=False):
         obj_name (str): name of the object, used as the name of the mesh and material
         center (bool, optional): whether to center the object. Defaults to True.
     """
+    bpy.ops.object.mode_set(mode="OBJECT")
+    
     if obj_root.endswith(".obj"):
         bpy.ops.import_scene.obj(filepath=obj_root)
     elif obj_root.endswith(".ply"):
         bpy.ops.import_mesh.ply(filepath=obj_root)
     elif obj_root.endswith(".glb"):
         bpy.ops.import_scene.gltf(filepath=obj_root)
+    #elif obj_root.endswith(".blend"):
     else:
         raise NotImplementedError
+    print(bpy.context.selected_objects)
+    if not bpy.context.selected_objects:
+        raise IndexError(f"No objects were imported from {obj_root}. Check the file and object name.")
+    print(bpy.context.selected_objects)
     bpy.context.selected_objects[0].name = obj_name
     if bpy.context.selected_objects[0].type == "MESH":
         bpy.context.selected_objects[0].data.name = obj_name
@@ -90,4 +105,19 @@ def load_obj(obj_root, obj_name, center=True, join=False, smart_uv=False):
         bpy.ops.mesh.select_all(action="SELECT")
         bpy.ops.uv.smart_project()
         bpy.ops.object.mode_set(mode="OBJECT")
-    return obj
+    return obj 
+
+
+
+def center(obj,obj_name):
+    mesh = get_meshes(obj)[0]
+    vertices = get_vertices(mesh)
+    _, offset, _ = center_vert_bbox(vertices, scale=False)
+    matrix = np.eye(4)
+    matrix[:3, 3] = -offset
+    transform(mesh, Matrix(matrix))
+    obj.location = (0, 0, 0)
+
+    if obj.active_material is not None:
+        obj.active_material.name = f"mat_{obj_name}"
+    bpy.context.view_layer.objects.active = obj

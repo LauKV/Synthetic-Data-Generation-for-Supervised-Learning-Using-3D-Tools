@@ -60,3 +60,17 @@ def render_image(path=None):
         bpy.context.scene.render.filepath = path
     bpy.ops.render.render(write_still=True)
 
+""" def render_image(path=None, mask=False):
+    # If path is provided, set it as the output file path
+    if path is not None:
+        bpy.context.scene.render.filepath = path
+    
+    # Enable object index pass if rendering the mask
+    if mask:
+        bpy.context.view_layer.use_pass_object_index = True
+    else:
+        bpy.context.view_layer.use_pass_object_index = False
+
+    # Perform the render (writes the image to the file path)
+    bpy.ops.render.render(write_still=True)
+ """
