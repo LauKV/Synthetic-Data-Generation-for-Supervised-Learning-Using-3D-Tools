@@ -7,7 +7,9 @@ get-pip.py.1
 blender-3.2.2-linux-x64/
 PyBlend/
 PYBLEND/tmp/
-
+*.blend
+tmp
+*.exr
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
