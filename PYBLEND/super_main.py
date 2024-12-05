@@ -90,7 +90,7 @@ def load_and_combine_objects(filepath):
 def load_objects(object_paths):
     objects = []
     for i, obj_path in enumerate(object_paths):
-        if args.input.endswith(".blend"):
+        if obj_path.endswith(".blend"):
             print("Blend object!")
             obj = load_and_combine_objects(obj_path) # load_mesh_with_materials_original(args.input) # append_and_join_objects(args.input) 
             print(obj)
