@@ -26,9 +26,8 @@ def run_blender_commands(obj_dir, hdri_dir, output_base_dir, blender_app, script
         print("No .exr HDRI files found in the directory.")
         return
 
-    
-    for hdri in hdri_files: 
-        for obj_file in obj_files:
+    for obj_file in obj_files:
+        for hdri in hdri_files:
             # Select a random HDRI file
             # hdri_file = random.choice(hdri_files)
             hdri_path = os.path.join(hdri_dir, hdri)
